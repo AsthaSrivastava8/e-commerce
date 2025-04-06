@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e91177dc-535a-4919-9ba8-c792487644e6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ecommerce/project/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ecommerce/project/controller/CategoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ecommerce/project/model/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ecommerce/project/model/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ecommerce/project/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ecommerce/project/service/CategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ecommerce/project/service/ServiceCategoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ecommerce/project/service/ServiceCategoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ecommerce/project/controller/CategoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ecommerce/project/controller/CategoryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ecommerce/project/service/CategoryService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ecommerce/project/service/CategoryService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ecommerce/project/service/ServiceCategoryImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ecommerce/project/service/ServiceCategoryImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +97,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743939471526</updated>
-      <workItem from="1743939472586" duration="4434000" />
+      <workItem from="1743939472586" duration="7617000" />
     </task>
     <servers />
   </component>
