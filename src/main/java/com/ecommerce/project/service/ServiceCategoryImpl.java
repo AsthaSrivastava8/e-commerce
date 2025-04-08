@@ -20,14 +20,19 @@ public class ServiceCategoryImpl implements CategoryService {
 
     @Override
     public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+
+        List<Category> categories = categoryRepository.findAll();
+        if(categories.isEmpty()) {
+            throw new APIException("No categories found!");
+        }
+        return categories;
     }
 
     @Override
     public void createCategory(Category category) {
-        Category foundCategory = categoryRepository.findCategoryByCategoryName(category.getCategoryName());
+        Category foundCategory = categoryRepository.findByCategoryName(category.getCategoryName());
         if(foundCategory != null) {
-            throw new APIException("Category already exists!");
+            throw new APIException("Category with name " + category.getCategoryName() + " already exists!");
         }
         categoryRepository.save(category);
     }
