@@ -1,7 +1,8 @@
 package com.ecommerce.project.controller;
 
-import com.ecommerce.project.exceptions.APIException;
-import com.ecommerce.project.model.Category;
+import com.ecommerce.project.controller.dto.CategoryDTO;
+import com.ecommerce.project.controller.dto.CategoryResponse;
+import com.ecommerce.project.entity.Category;
 import com.ecommerce.project.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -22,13 +23,13 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping("/public/categories")
-    public ResponseEntity<List<Category>> getAllCategories() {
+    public ResponseEntity<CategoryResponse> getAllCategories() {
 
         return new ResponseEntity<>(categoryService.getAllCategories(), HttpStatus.OK);
     }
 
     @PostMapping("/admin/categories")
-    public ResponseEntity<String> addCategory(@Valid @RequestBody Category category) {
+    public ResponseEntity<String> addCategory(@Valid @RequestBody CategoryDTO category) {
 
         categoryService.createCategory(category);
             return ResponseEntity.ok(HttpStatus.CREATED.getReasonPhrase());
