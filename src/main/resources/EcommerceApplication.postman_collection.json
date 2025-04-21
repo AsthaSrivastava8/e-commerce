@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "61d77f20-cc4b-4cad-adfe-d985861e5400",
+		"name": "EcommerceApplication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13228572"
+	},
+	"item": [
+		{
+			"name": "Get all categories",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/public/categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"public",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new category",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"categoryName\": \"Travel\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create multiple categories",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"categoryName\": \"Travel\"\n    },\n    {\n        \"categoryName\": \"Working\"\n    },\n    {\n        \"categoryName\": \"Personal\"\n    },\n    {\n        \"categoryName\": \"Shopping\"\n    },\n    {\n        \"categoryName\": \"Health\"\n    },\n    {\n        \"categoryName\": \"Education\"\n    },\n    {\n        \"categoryName\": \"Finance\"\n    },\n    {\n        \"categoryName\": \"Household\"\n    },\n    {\n        \"categoryName\": \"Family\"\n    },\n    {\n        \"categoryName\": \"Hobbies\"\n    },\n    {\n        \"categoryName\": \"Fitness\"\n    },\n    {\n        \"categoryName\": \"Entertainment\"\n    },\n    {\n        \"categoryName\": \"Social\"\n    },\n    {\n        \"categoryName\": \"Projects\"\n    },\n    {\n        \"categoryName\": \"Events\"\n    },\n    {\n        \"categoryName\": \"Cooking\"\n    },\n    {\n        \"categoryName\": \"Technology\"\n    },\n    {\n        \"categoryName\": \"Outdoor\"\n    },\n    {\n        \"categoryName\": \"Reading\"\n    },\n    {\n        \"categoryName\": \"Wellness\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/categories/multiple",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"categories",
+						"multiple"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete category",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/categories/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"categories",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update category",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"categoryName\" : \"Liesure\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/categories/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"categories",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

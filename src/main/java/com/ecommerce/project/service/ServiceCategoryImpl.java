@@ -7,6 +7,9 @@ import com.ecommerce.project.exceptions.ResourceNotFoundException;
 import com.ecommerce.project.entity.Category;
 import com.ecommerce.project.repository.CategoryRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,9 +28,12 @@ public class ServiceCategoryImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse getAllCategories() {
+    public CategoryResponse getAllCategories(int pageNumber, int pageSize) {
 
-        List<Category> categories = categoryRepository.findAll();
+        Pageable pageDetails = PageRequest.of(pageNumber, pageSize);
+        Page<Category> categoryPage = categoryRepository.findAll(pageDetails);
+
+        List<Category> categories = categoryPage.getContent();
         if (categories.isEmpty()) {
             throw new ResourceNotFoundException("No categories found!");
         }
@@ -53,7 +59,26 @@ public class ServiceCategoryImpl implements CategoryService {
     }
 
     @Override
-    public String deleteCategory(Long categoryId) {
+    public String createCategories(List<CategoryDTO> categories) {
+
+        for (CategoryDTO categoryDTO : categories) {
+
+            Category foundCategory = categoryRepository.findByCategoryName(categoryDTO.getCategoryName());
+            if (foundCategory != null) {
+                throw new APIException("Category with name " + categoryDTO.getCategoryName() + " already exists!");
+            }
+        }
+
+        for (CategoryDTO categoryDTO : categories) {
+
+            categoryRepository.save(modelMapper.map(categoryDTO, Category.class));
+        }
+
+        return categories.size() + " categories created successfully!";
+    }
+
+    @Override
+    public CategoryDTO deleteCategory(Long categoryId) {
         Optional<Category> category = categoryRepository.findById(categoryId);
         if (category.isPresent()) {
             categoryRepository.deleteById(categoryId);
@@ -62,7 +87,7 @@ public class ServiceCategoryImpl implements CategoryService {
             throw new ResourceNotFoundException("Category", "Category ID", categoryId);
         }
 
-        return "Category deleted successfully!";
+        return modelMapper.map(category, CategoryDTO.class);
     }
 
     @Override
