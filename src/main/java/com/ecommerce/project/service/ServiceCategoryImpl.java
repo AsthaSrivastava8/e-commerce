@@ -1,7 +1,7 @@
 package com.ecommerce.project.service;
 
-import com.ecommerce.project.controller.dto.CategoryDTO;
-import com.ecommerce.project.controller.dto.CategoryResponse;
+import com.ecommerce.project.dto.CategoryDTO;
+import com.ecommerce.project.dto.CategoryResponse;
 import com.ecommerce.project.exceptions.APIException;
 import com.ecommerce.project.exceptions.ResourceNotFoundException;
 import com.ecommerce.project.entity.Category;
@@ -10,8 +10,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,9 +30,13 @@ public class ServiceCategoryImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse getAllCategories(int pageNumber, int pageSize) {
+    public CategoryResponse getAllCategories(int pageNumber, int pageSize, String sortBy, String sortOrder) {
 
-        Pageable pageDetails = PageRequest.of(pageNumber, pageSize);
+        Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc")
+                ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+        Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
         Page<Category> categoryPage = categoryRepository.findAll(pageDetails);
 
         List<Category> categories = categoryPage.getContent();
@@ -42,12 +48,17 @@ public class ServiceCategoryImpl implements CategoryService {
                 .map(category -> modelMapper.map(category, CategoryDTO.class))
                 .collect(Collectors.toList());
 
-        CategoryResponse categoryResponse = new CategoryResponse(categoriesDTO);
+        long totalElements = categoryPage.getTotalElements();
+        int totalPages = categoryPage.getTotalPages();
+        boolean isLastPage = categoryPage.isLast();
+
+        CategoryResponse categoryResponse = new CategoryResponse(categoriesDTO, pageNumber, pageSize,
+                totalElements, totalPages, isLastPage);
         return categoryResponse;
     }
 
     @Override
-    public CategoryDTO createCategory(CategoryDTO category) {
+    public CategoryResponse createCategory(CategoryDTO category) {
         Category foundCategory = categoryRepository.findByCategoryName(category.getCategoryName());
         if (foundCategory != null) {
             throw new APIException("Category with name " + category.getCategoryName() + " already exists!");
@@ -55,7 +66,7 @@ public class ServiceCategoryImpl implements CategoryService {
 
         categoryRepository.save(modelMapper.map(category, Category.class));
 
-        return category;
+        return new CategoryResponse(Collections.singletonList(modelMapper.map(category, CategoryDTO.class)));
     }
 
     @Override
@@ -78,7 +89,7 @@ public class ServiceCategoryImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO deleteCategory(Long categoryId) {
+    public String deleteCategory(Long categoryId) {
         Optional<Category> category = categoryRepository.findById(categoryId);
         if (category.isPresent()) {
             categoryRepository.deleteById(categoryId);
@@ -87,7 +98,7 @@ public class ServiceCategoryImpl implements CategoryService {
             throw new ResourceNotFoundException("Category", "Category ID", categoryId);
         }
 
-        return modelMapper.map(category, CategoryDTO.class);
+        return "Category with ID: " + category.get().getCategoryId() + " deleted successfully!";
     }
 
     @Override

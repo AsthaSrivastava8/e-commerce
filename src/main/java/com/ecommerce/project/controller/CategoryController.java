@@ -1,13 +1,13 @@
 package com.ecommerce.project.controller;
 
-import com.ecommerce.project.controller.dto.CategoryDTO;
-import com.ecommerce.project.controller.dto.CategoryResponse;
+import com.ecommerce.project.config.AppConstants;
+import com.ecommerce.project.dto.CategoryDTO;
+import com.ecommerce.project.dto.CategoryResponse;
 import com.ecommerce.project.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -22,10 +22,24 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping("/public/categories")
-    public ResponseEntity<CategoryResponse> getAllCategories(@RequestParam(name = "pageNumber") int pageNumber,
-                                                             @RequestParam(name = "pageSize") int pageSize) {
+    public ResponseEntity<CategoryResponse> getAllCategories(@RequestParam(name = "pageNumber",
+                                                                     defaultValue = AppConstants.PAGE_NUMBER,
+                                                                     required = false)
+                                                             int pageNumber,
+                                                             @RequestParam(name = "pageSize",
+                                                                     defaultValue = AppConstants.PAGE_SIZE,
+                                                                     required = false)
+                                                             int pageSize,
+                                                             @RequestParam(name = "sortBy",
+                                                                     defaultValue = AppConstants.SORT_CATEGORIES_BY,
+                                                                     required = false)
+                                                             String sortBy,
+                                                             @RequestParam(name = "sortOrder",
+                                                                     defaultValue = AppConstants.SORT_ORDER,
+                                                                     required = false)
+                                                             String sortOrder) {
 
-        return new ResponseEntity<>(categoryService.getAllCategories(pageNumber, pageSize), HttpStatus.OK);
+        return ResponseEntity.ok(categoryService.getAllCategories(pageNumber, pageSize, sortBy, sortOrder));
     }
 
     @PostMapping("/admin/categories")
@@ -43,7 +57,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/admin/categories/{categoryId}")
-    public ResponseEntity<CategoryDTO> deleteCategory(@PathVariable Long categoryId) {
+    public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId) {
 
         return ResponseEntity.ok(categoryService.deleteCategory(categoryId));
     }
@@ -51,11 +65,7 @@ public class CategoryController {
     @PutMapping("/admin/categories/{categoryId}")
     public ResponseEntity<String> updateCategory(@RequestBody CategoryDTO category, @PathVariable Long categoryId) {
 
-        try {
-            return ResponseEntity.ok(categoryService.updateCategory(category, categoryId));
+        return ResponseEntity.ok(categoryService.updateCategory(category, categoryId));
 
-        } catch (ResponseStatusException ex) {
-            return new ResponseEntity<>(ex.getReason(), ex.getStatusCode());
-        }
     }
 }
