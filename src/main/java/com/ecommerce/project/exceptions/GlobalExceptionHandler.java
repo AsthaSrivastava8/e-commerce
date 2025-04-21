@@ -21,19 +21,15 @@ public class GlobalExceptionHandler {
 
         Map<String, String> response = new HashMap<>();
 
-        if (exception instanceof MethodArgumentNotValidException) {
+        if (exception instanceof MethodArgumentNotValidException methodArgumentNotValidException) {
 
-            MethodArgumentNotValidException
-                    methodArgumentNotValidException = (MethodArgumentNotValidException) exception;
             methodArgumentNotValidException.getBindingResult()
                     .getAllErrors().forEach((error) -> {
                         String fieldName = ((FieldError) error).getField();
                         String errorMessage = error.getDefaultMessage();
                         response.put(fieldName, errorMessage);
                     });
-        } else if (exception instanceof ConstraintViolationException) {
-
-            ConstraintViolationException constraintViolationException = (ConstraintViolationException) exception;
+        } else if (exception instanceof ConstraintViolationException constraintViolationException) {
 
             constraintViolationException.getConstraintViolations().forEach((error) -> {
                 String propertyPath = error.getPropertyPath().toString();

@@ -2,7 +2,6 @@ package com.ecommerce.project.service;
 
 import com.ecommerce.project.controller.dto.CategoryDTO;
 import com.ecommerce.project.controller.dto.CategoryResponse;
-import com.ecommerce.project.entity.Category;
 
 public interface CategoryService {
 
@@ -12,5 +11,5 @@ public interface CategoryService {
 
     String deleteCategory(Long categoryId);
 
-    String updateCategory(Category category, Long categoryId);
+    String updateCategory(CategoryDTO category, Long categoryId);
 }

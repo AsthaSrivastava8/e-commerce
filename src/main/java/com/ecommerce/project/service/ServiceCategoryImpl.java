@@ -9,7 +9,6 @@ import com.ecommerce.project.repository.CategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,7 +29,7 @@ public class ServiceCategoryImpl implements CategoryService {
 
         List<Category> categories = categoryRepository.findAll();
         if (categories.isEmpty()) {
-            throw new APIException("No categories found!");
+            throw new ResourceNotFoundException("No categories found!");
         }
 
         List<CategoryDTO> categoriesDTO = categories.stream()
@@ -67,7 +66,7 @@ public class ServiceCategoryImpl implements CategoryService {
     }
 
     @Override
-    public String updateCategory(Category category, Long categoryId) {
+    public String updateCategory(CategoryDTO category, Long categoryId) {
 
         Optional<Category> updatedCategory = categoryRepository.findById(categoryId);
 
